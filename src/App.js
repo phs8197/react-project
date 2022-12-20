@@ -11,9 +11,10 @@ function App() {
     "가목도리 추천",
     "나신발 추천",
   ]);
-
+  let [선택제목, 선택제목변경] = useState(0);
   let [따봉, 따봉변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
+  let [입력값, 입력값변경] = useState("");
 
   return (
     <div className="App">
@@ -26,6 +27,7 @@ function App() {
             <h4
               onClick={() => {
                 setModal(!modal);
+                선택제목변경(i);
               }}
             >
               {a}{" "}
@@ -44,8 +46,18 @@ function App() {
           </div>
         );
       })}
+      <input
+        onChange={(e) => {
+          입력값변경(e.target.value);
+          글제목.push(e.target.value);
+        }}
+      ></input>
       {modal == true ? (
-        <Modal 글제목={글제목} 글제목변경={글제목변경}></Modal>
+        <Modal
+          글제목={글제목}
+          글제목변경={글제목변경}
+          선택제목={선택제목}
+        ></Modal>
       ) : null}
     </div>
   );
@@ -54,7 +66,7 @@ function App() {
 function Modal(props) {
   return (
     <div className="modal">
-      <h4>{props.글제목.map((a) => a)}</h4>
+      <h4>{props.글제목[props.선택제목]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
     </div>
