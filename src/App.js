@@ -14,34 +14,20 @@ function App() {
 
   let [따봉, 따봉변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
-  function changeState() {
-    if (글제목[0] === "남자 코트 추천") {
-      글제목[0] = "여자 코트 추천";
-      글제목변경([...글제목]);
-      console.log(글제목);
-    } else {
-      글제목[0] = "남자 코트 추천";
-      글제목변경([...글제목]);
-      console.log(글제목);
-    }
-  }
 
   return (
     <div className="App">
       <div className="black-nav">
         <h4 id={post}>블로그임</h4>
-        <button
-          onClick={() => {
-            setModal(!modal);
-          }}
-        >
-          모달창
-        </button>
       </div>
       {글제목.map(function (a, i) {
         return (
           <div className="list" key={i}>
-            <h4>
+            <h4
+              onClick={() => {
+                setModal(!modal);
+              }}
+            >
               {a}{" "}
               <span
                 onClick={() => {
@@ -59,7 +45,7 @@ function App() {
         );
       })}
       {modal == true ? (
-        <Modal 글제목={글제목} changeState={changeState}></Modal>
+        <Modal 글제목={글제목} 글제목변경={글제목변경}></Modal>
       ) : null}
     </div>
   );
@@ -68,10 +54,9 @@ function App() {
 function Modal(props) {
   return (
     <div className="modal">
-      <h4>{props.글제목[0]}</h4>
+      <h4>{props.글제목.map((a) => a)}</h4>
       <p>날짜</p>
       <p>상세내용</p>
-      <button onClick={() => props.changeState()}>글 수정</button>
     </div>
   );
 }
