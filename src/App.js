@@ -2,7 +2,7 @@
 
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 function App() {
   let post = "강남 우동 맛집";
@@ -43,15 +43,28 @@ function App() {
               {따봉[i]}
             </h4>
             <p>2월 17일 발행</p>
+            <button
+              onClick={(e) => {
+                글제목.splice(i, 1);
+                글제목변경([...글제목]);
+              }}
+            >
+              삭제
+            </button>
           </div>
         );
       })}
-      <input
-        onChange={(e) => {
-          입력값변경(e.target.value);
-          글제목.push(e.target.value);
+
+      <input onChange={(e) => 입력값변경(e.target.value)}></input>
+      <button
+        onClick={() => {
+          글제목.push(입력값);
+          글제목변경([...글제목]);
         }}
-      ></input>
+      >
+        글 발행
+      </button>
+
       {modal == true ? (
         <Modal
           글제목={글제목}
